@@ -12,6 +12,12 @@
   </a>
 </p>
 
+<div align="center">
+
+![Main window screenshot](screenshots/hexacon_image.png)
+
+</div>
+
 # Features
 
   - Convert any Unicode symbol.
