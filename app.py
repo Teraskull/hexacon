@@ -1,4 +1,5 @@
 from tkinter import Tk, ttk
+import binascii
 
 window = Tk()
 window.title("Hexacon")
@@ -18,22 +19,31 @@ center_window(520, 120)
 separator = '\\x'
 
 
-def ascii_to_hex():
-    text = input_ascii.get()
+def utf_to_hex():
+    """
+    Converts utf-8 to hexadecimal string and inserts in 'text_box' entry.
+    """
+    text = binascii.hexlify(input_utf.get().encode('utf-8')).decode('utf-8')
     if text:
         text_box.config(state='enabled')
         text_box.delete(0, 'end')
-        text_box.insert(0, f"{separator}{separator.join(hex(ord(x))[2:] for x in text)}")
+        text_box.insert(0, f"{separator}{separator.join(text[i:i + 2] for i in range(0, len(text), 2))}")
         text_box.config(state='readonly')
 
 
-def hex_to_ascii():
+def hex_to_utf():
+    """
+    Converts hexadecimal string to utf-8 and inserts in 'text_box' entry.
+
+    Raises:
+        ValueError: If passed HEX string is not valid, erase entry.
+    """
     text = input_hex.get()
     if text:
         text_box.config(state='enabled')
         text_box.delete(0, 'end')
         try:
-            text_box.insert(0, bytearray.fromhex(text.replace(separator, '')).decode())
+            text_box.insert(0, bytearray.fromhex(text.replace(separator, '')).decode('utf-8'))
         except ValueError as e:
             input_hex.delete(0, 'end')
         text_box.config(state='readonly')
@@ -45,13 +55,13 @@ def copy_result():
     window.clipboard_append(text)
 
 
-label_hex = ttk.Label(window, text="To Ascii: ")
+label_hex = ttk.Label(window, text="To utf: ")
 input_hex = ttk.Entry(window, width=60)
-button_hex = ttk.Button(window, text="Convert", command=hex_to_ascii)
+button_hex = ttk.Button(window, text="Convert", command=hex_to_utf)
 
-label_ascii = ttk.Label(window, text="To Hex: ")
-input_ascii = ttk.Entry(window, width=60)
-button_ascii = ttk.Button(window, text="Convert", command=ascii_to_hex)
+label_utf = ttk.Label(window, text="To hex: ")
+input_utf = ttk.Entry(window, width=60)
+button_utf = ttk.Button(window, text="Convert", command=utf_to_hex)
 
 label_output = ttk.Label(window, text="Output: ")
 text_box = ttk.Entry(window, width=60)
@@ -62,9 +72,9 @@ label_hex.grid(column=0, row=0, pady=(10, 10), sticky='E')
 input_hex.grid(column=1, row=0, pady=(10, 10))
 button_hex.grid(column=2, row=0, padx=(10, 0), pady=(10, 10))
 
-label_ascii.grid(column=0, row=1, sticky='E')
-input_ascii.grid(column=1, row=1)
-button_ascii.grid(column=2, row=1, padx=(10, 0))
+label_utf.grid(column=0, row=1, sticky='E')
+input_utf.grid(column=1, row=1)
+button_utf.grid(column=2, row=1, padx=(10, 0))
 
 label_output.grid(column=0, row=2, padx=(10, 0), pady=(15, 0), sticky='E')
 text_box.grid(column=1, row=2, pady=(15, 0))
