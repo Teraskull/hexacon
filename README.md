@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-    Hexacon is a GUI application for converting hexadecimal strings to utf-8 and vice versa.
+    Hexacon is a GUI application for converting hexadecimal strings to utf-8.
 </p>
 
 <p align="center">
@@ -26,14 +26,14 @@
 
 # Examples
 
-### utf 🠦 hex
+### utf ⟹ hex
 ```python
-  "This is a string" 🠦 "\x54\x68\x69\x73\x20\x69\x73\x20\x61\x20\x73\x74\x72\x69\x6e\x67"
+  "This is a string" ⟹ "\x54\x68\x69\x73\x20\x69\x73\x20\x61\x20\x73\x74\x72\x69\x6e\x67"
 ```
 
-### hex 🠦 utf
+### hex ⟹ utf
 ```python
-"54686973206973206120737472696e67" 🠦 "This is a string"
+"54686973206973206120737472696e67" ⟹ "This is a string"
 ```
 
 ## License:
