@@ -24,12 +24,14 @@ def utf_to_hex():
     Converts utf-8 to hexadecimal string and inserts in 'text_box' entry.
     """
     text = binascii.hexlify(input_utf.get().encode('utf-8')).decode('utf-8')
+    text_box.config(state='enabled')
+    text_box.delete(0, 'end')
     if text:
-        text_box.config(state='enabled')
-        text_box.delete(0, 'end')
         text_box.insert(0, f"{separator}{separator.join(text[i:i + 2] for i in range(0, len(text), 2))}")
-        text_box.config(state='readonly')
         button_copy.config(text='Copy')
+    else:
+        text_box.delete(0, 'end')
+    text_box.config(state='readonly')
 
 
 def hex_to_utf():
@@ -40,22 +42,23 @@ def hex_to_utf():
         ValueError: If passed HEX string is not valid, erase entry.
     """
     text = input_hex.get()
+    text_box.config(state='enabled')
+    text_box.delete(0, 'end')
     if text:
-        text_box.config(state='enabled')
-        text_box.delete(0, 'end')
         try:
             text_box.insert(0, bytearray.fromhex(text.replace(separator, '')).decode('utf-8'))
             button_copy.config(text='Copy')
         except ValueError as e:
             input_hex.delete(0, 'end')
-        text_box.config(state='readonly')
+    text_box.config(state='readonly')
 
 
 def copy_result():
     text = text_box.get()
-    window.clipboard_clear()
-    window.clipboard_append(text)
-    button_copy.config(text='Copied')
+    if text:
+        window.clipboard_clear()
+        window.clipboard_append(text)
+        button_copy.config(text='Copied')
 
 
 label_hex = ttk.Label(window, text="To utf: ")
