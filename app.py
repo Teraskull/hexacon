@@ -19,7 +19,7 @@ center_window(520, 120)
 separator = '\\x'
 
 
-def utf_to_hex():
+def utf_to_hex() -> None:
     """
     Converts utf-8 to hexadecimal string and inserts in 'text_box' entry.
     """
@@ -34,7 +34,7 @@ def utf_to_hex():
     text_box.config(state='readonly')
 
 
-def hex_to_utf():
+def hex_to_utf() -> None:
     """
     Converts hexadecimal string to utf-8 and inserts in 'text_box' entry.
 
@@ -53,7 +53,7 @@ def hex_to_utf():
     text_box.config(state='readonly')
 
 
-def copy_result():
+def copy_result() -> None:
     text = text_box.get()
     if text:
         window.clipboard_clear()
